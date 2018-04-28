@@ -3,7 +3,7 @@
  */
 class APIHelper {
     static getBaseUrl() {
-        return 'https://api.vlogz.win';
+        return 'http://localhost:1337';
     }
 
     /**
