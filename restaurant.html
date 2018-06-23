@@ -2,84 +2,102 @@
 <html lang="en">
 
 <head>
-
-  <meta name="viewport" content="width=device-width">
-  <meta charset="utf-8">
-  <!-- Normalize.css for better cross-browser consistency -->
-  <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
-
-  <!-- Main CSS file -->
-  <link rel="stylesheet" href="css/styles.css" type="text/css">
-  <link rel="manifest" href="manifest.json">
-  <title>Restaurant Info</title>
+    <meta name="viewport" content="width=device-width">
+    <meta charset="utf-8">
+    <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
+    <link rel="stylesheet" href="css/styles.css" type="text/css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#444444">
+    <title>Restaurant Info</title>
 </head>
 
 <body class="inside">
-  <!-- Beginning header -->
-  <header>
-    <!-- Beginning nav -->
-    <nav role="navigation" >
-      <h1 id="navigationheader"><a href="/">Restaurant Reviews</a></h1>
-    </nav>
-    <!-- Beginning breadcrumb -->
-
-    <div role="navigation" aria-label="Breadcrumb">
-      <ul id="breadcrumb">
-        <li><a href="/">Home</a></li>
-      </ul>
-    </div>
-
-    <!-- End breadcrumb -->
-    <!-- End nav -->
-  </header>
-  <!-- End header -->
-
-  <!-- Beginning main -->
-  <main id="maincontent" role="main">
-    <!-- Beginning map -->
-    <section id="map-container">
-      <div id="map" role="application"></div>
-    </section>
-    <!-- End map -->
-    <!-- Beginning restaurant -->
-    <section id="restaurant-container">
-      <h3 id="restaurant-name" tabIndex="0"></h3>
-      <picture id="restaurant-img">
-        <source type="image/webp">
-        <img class="restaurant-img" type="image/png" alt=''/>
-      </picture>
-      <!--<img id="restaurant-img" >-->
-      <p id="restaurant-cuisine" tabIndex="0"></p>
-      <p id="restaurant-address" tabIndex="0"></p>
-      <table id="restaurant-hours" tabIndex="0"></table>
-    </section>
-    <!-- end restaurant -->
-    <!-- Beginning reviews -->
-    <section id="reviews-container">
-      <ul id="reviews-list"></ul>
-    </section>
-    <!-- End reviews -->
-  </main>
-  <!-- End main -->
-
-  <!-- Beginning footer -->
-  <footer id="footer">
-    Copyright (c) 2017 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
-  </footer>
-  <!-- End footer -->
-
-  <!-- Beginning scripts -->
-  <!-- Database helpers -->
-  <script type="application/javascript" charset="utf-8" src="js/localforage.min.js"></script>
-  <script type="application/javascript" charset="utf-8" src="js/apihelper.js"></script>
-  <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
-
-  <!-- Main javascript file -->
-  <script type="application/javascript" charset="utf-8" src="js/restaurant_info.js"></script>
-  <!-- Google Maps -->
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJDOEGdJdvzGm4qPFqmr3nSMPfpfEqtUk&libraries=places&callback=initMap"></script>
-  <!-- End scripts -->
-
+    <!-- Beginning header -->
+    <header>
+        <!-- Beginning nav -->
+        <nav role="navigation">
+            <h1 id="navigationheader"><a href="/">Restaurant Reviews</a></h1>
+        </nav>
+        <!-- Beginning breadcrumb -->
+        <div role="navigation" aria-label="Breadcrumb">
+            <ul id="breadcrumb">
+                <li><a href="/">Home</a></li>
+            </ul>
+        </div>
+        <!-- End breadcrumb -->
+        <!-- End nav -->
+    </header>
+    <!-- End header -->
+    <!-- Beginning main -->
+    <main id="maincontent" role="main">
+        <!-- Beginning map -->
+        <section id="map-container">
+            <img class="btn-toggle" src="./img/gps.png" onclick="showMap()" title="Show Map" aria-label="Show Map" tabindex="0"></img>
+            <div id="map" role="application" style="display: none;"></div>
+        </section>
+        <!-- End map -->
+        <!-- Beginning restaurant -->
+        <section id="restaurant-container">
+            <h3 id="restaurant-name" tabIndex="0"></h3>
+            <picture id="isFavorite" class="star-favorite" onclick="favoriteRestaurant()" title="Favorite it!" tabIndex="0"></picture>
+            <picture id="restaurant-img">
+                <source type="image/webp">
+                <img class="restaurant-img" type="image/png" alt='' />
+            </picture>
+            <!--<img id="restaurant-img" >-->
+            <p id="restaurant-cuisine" tabIndex="0"></p>
+            <p id="restaurant-address" tabIndex="0"></p>
+            <table id="restaurant-hours" tabIndex="0"></table>
+        </section>
+        <!-- end restaurant -->
+        <!-- Beginning reviews -->
+        <section id="reviews-container">
+            <section id="review-form-container">
+                <h3>Submit a review: </h3>
+                <form id="review-form" action="javascript:void(0)">
+                    <div class="review-form-wrapper">
+                        <label for="review-name">Name:</label>
+                        <input type="text" id="review-name" aria-label="Name" aria-required="true" required>
+                        <label for="review-text">Review:</label>
+                        <textarea type="textarea" id="review-text" aria-label="Review text" rows="4" aria-required="true" required></textarea>
+                        <p>Rating:</p>
+                        <div class="star-rating">
+                            <input type="radio" id="rating5" name="rating" value="5" />
+                            <label for="rating5" class="star" tabindex="0" aria-label="Rating 5 out of 5">&#9733;</label>
+                            <input type="radio" id="rating4" name="rating" value="4" />
+                            <label for="rating4" class="star" tabindex="0" aria-label="Rating 4 out of 5">&#9733;</label>
+                            <input type="radio" id="rating3" name="rating" value="3" />
+                            <label for="rating3" class="star" tabindex="0" aria-label="Rating 3 out of 5">&#9733;</label>
+                            <input type="radio" id="rating2" name="rating" value="2" />
+                            <label for="rating2" class="star" tabindex="0" aria-label="Rating 2 out of 5">&#9733;</label>
+                            <input type="radio" id="rating1" name="rating" value="1" />
+                            <label for="rating1" class="star" tabindex="0" aria-label="Rating 1 out of 5">&#9733;</label>
+                        </div>
+                        <input type="submit" id="review-submit" value="Send">
+                        <p id="review-status"></p>
+                    </div>
+                </form>
+            </section>
+            <ul id="reviews-list"></ul>
+        </section>
+        <!-- End reviews -->
+    </main>
+    <!-- End main -->
+    <!-- Beginning footer -->
+    <footer id="footer">
+        Copyright (c) 2018 <a href="/"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
+    </footer>
+    <!-- End footer -->
+    <!-- Beginning scripts -->
+    <!-- Database helpers -->
+    <script type="application/javascript" charset="utf-8" src="js/localforage.min.js"></script>
+    <script type="application/javascript" charset="utf-8" src="js/apihelper.js"></script>
+    <script type="application/javascript" charset="utf-8" src="js/dbhelper.js"></script>
+    <!-- Main javascript file -->
+    <script type="application/javascript" charset="utf-8" src="js/restaurant_info.js"></script>
+    <!-- Google Maps -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJDOEGdJdvzGm4qPFqmr3nSMPfpfEqtUk&libraries=places"></script>
+    <!-- End scripts -->
 </body>
 
 </html>
