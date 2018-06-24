@@ -161,6 +161,7 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
  */
 createRestaurantHTML = (restaurant) => {
 
+    // add required review suggestion: aria-label to View Details Button to provide a better description of the button
     const template = `
   <li>
   <picture>
@@ -173,7 +174,7 @@ createRestaurantHTML = (restaurant) => {
       </div>
       <p>${restaurant.neighborhood}</p>
       <p>${restaurant.address}</p>
-      <a href="./restaurant.html?id=${restaurant.id}">View Details</a>
+      <a href="./restaurant.html?id=${restaurant.id}" aria-label="View Details of ${restaurant.name}">View Details</a>
     </div>
   </li>
   `;
